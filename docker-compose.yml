@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/api/Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - uploads:/tmp/pitch-deck-uploads
+    depends_on:
+      - mongo
+      - redis
+      - rabbitmq
+    networks:
+      - backend
+
+  parser:
+    build:
+      context: .
+      dockerfile: docker/parser/Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - uploads:/tmp/pitch-deck-uploads
+    depends_on:
+      - mongo
+      - rabbitmq
+    networks:
+      - backend
+
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - uploads:/tmp/pitch-deck-uploads
+    depends_on:
+      - api
+    networks:
+      - backend
+
+  mongo:
+    image: mongo:6.0
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - backend
+
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    networks:
+      - backend
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: unless-stopped
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  uploads:
+  mongo_data:
+  redis_data:
+  rabbitmq_data:
