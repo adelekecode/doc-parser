@@ -10,16 +10,37 @@ import pika
 import json
 from datetime import timedelta
 
+
+
+
+
+
+
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
+
+
+
+
+
+
 
 @api_bp.route('/health', methods=['GET'])
 def health_check():
     return jsonify({'status': 'ok'}), 200
 
+
+
+
+
+
+
+
 @api_bp.route('/upload', methods=['POST'])
 def upload_document():
+
     # Check if the post request has the file part
     if 'file' not in request.files:
         return jsonify({'error': 'No file part'}), 400
@@ -114,6 +135,7 @@ def upload_document():
                 # Clean up the file
                 if os.path.exists(file_path):
                     os.remove(file_path)
+                    
                 return jsonify({'error': str(e)}), 415
                 
             except ParsingError as e:

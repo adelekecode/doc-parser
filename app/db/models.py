@@ -1,6 +1,9 @@
 import datetime
 from app import mongo
 
+
+
+
 def save_document_data(document_metadata, document_data):
     """
     Save document metadata and parsed data to MongoDB
@@ -41,6 +44,10 @@ def get_document_by_id(document_id):
     document = mongo.db.documents.find_one({'document_id': document_id}, {'_id': 0})
     return document
 
+
+
+
+
 def get_all_documents():
     """
     Retrieve all documents
@@ -49,4 +56,6 @@ def get_all_documents():
         list: List of documents
     """
     documents = list(mongo.db.documents.find({}, {'_id': 0}))
+
+
     return documents
