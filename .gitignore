@@ -90,3 +90,4 @@ local_settings.py
 venv
 *.json
 
+/config

@@ -27,7 +27,7 @@ def allowed_file(filename):
 
 
 
-@api_bp.route('/health', methods=['GET'])
+@api_bp.route('/health/', methods=['GET'])
 def health_check():
     return jsonify({'status': 'ok'}), 200
 
@@ -38,7 +38,7 @@ def health_check():
 
 
 
-@api_bp.route('/upload', methods=['POST'])
+@api_bp.route('/upload/', methods=['POST'])
 def upload_document():
 
     # Check if the post request has the file part

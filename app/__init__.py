@@ -8,6 +8,8 @@ mongo = PyMongo()
 redis_client = Redis()
 
 def create_app(config_name='default'):
+
+    
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     
@@ -27,5 +29,7 @@ def create_app(config_name='default'):
     # Register blueprints
     from app.api import api_bp
     app.register_blueprint(api_bp, url_prefix='/api/v1')
+
+
     
     return app

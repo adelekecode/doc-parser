@@ -2,6 +2,10 @@ import os
 from datetime import timedelta
 
 class Config:
+
+
+
+
     SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-key-change-in-production')
     UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER', '/tmp/pitch-deck-uploads')
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16 MB max upload size
@@ -32,6 +36,10 @@ class ProductionConfig(Config):
     DEBUG = False
     # In production, ensure all configuration is loaded from environment variables
     SECRET_KEY = os.environ.get('SECRET_KEY')
+    
+
+
+
     
 config = {
     'development': DevelopmentConfig,
