@@ -1,6 +1,7 @@
 import os
 import uuid
-from flask import request, jsonify, current_app
+from flask import request, jsonify, current_app, send_from_directory
+
 from werkzeug.utils import secure_filename
 from app.api import api_bp
 from app.services.document_parser import DocumentParser
@@ -9,9 +10,6 @@ from app.utils.exceptions import UnsupportedFileError, ParsingError
 import pika
 import json
 from datetime import timedelta
-
-
-
 
 
 
@@ -31,6 +29,11 @@ def health_check():
 
 
 
+@api_bp.route('/uploads/<filename>', methods=['GET'])
+def get_uploaded_file(filename):
+
+    ## Would allow users access uploaded files, directly from path
+    return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename)
 
 
 

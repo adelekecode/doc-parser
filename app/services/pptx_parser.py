@@ -2,6 +2,12 @@ import os
 from pptx import Presentation
 from app.utils.exceptions import ParsingError
 
+
+
+
+
+
+
 class PPTXParser:
     def parse(self, file_path):
         """
