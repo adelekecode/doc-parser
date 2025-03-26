@@ -152,14 +152,14 @@ def upload_document():
     
     return jsonify({'error': 'File type not allowed'}), 415
 
-@api_bp.route('/documents', methods=['GET'])
+@api_bp.route('/documents/', methods=['GET'])
 def get_documents():
     from app import mongo
     # Get documents from MongoDB
     documents = list(mongo.db.documents.find({}, {'_id': 0}))
     return jsonify(documents), 200
 
-@api_bp.route('/documents/<document_id>', methods=['GET'])
+@api_bp.route('/documents/<document_id>/', methods=['GET'])
 def get_document(document_id):
     from app import mongo, redis_client
     
