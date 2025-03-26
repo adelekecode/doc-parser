@@ -73,7 +73,7 @@ networks:
     driver: bridge
 
 volumes:
-  uploads:
+  documents:
   mongo_data:
   redis_data:
   rabbitmq_data:
