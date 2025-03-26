@@ -123,7 +123,7 @@ You should see the following services running:
 ## Project Host
 
 ```
-curl -I http://0.0.0.0:5000
+curl -I http://0.0.0.0:5000/api/v1
 
 ```
 
