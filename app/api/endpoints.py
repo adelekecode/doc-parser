@@ -1,12 +1,15 @@
 import os
 import uuid
 from flask import request, jsonify, current_app, send_from_directory
+from pymongo import DESCENDING
 
 from werkzeug.utils import secure_filename
 from app.api import api_bp
 from app.services.document_parser import DocumentParser
 from app.db.models import save_document_data
 from app.utils.exceptions import UnsupportedFileError, ParsingError
+from app import mongo
+
 import pika
 import json
 from datetime import timedelta
@@ -29,7 +32,7 @@ def health_check():
 
 
 
-@api_bp.route('/uploads/<filename>', methods=['GET'])
+@api_bp.route('/documents/<filename>', methods=['GET'])
 def get_uploaded_file(filename):
 
     ## Would allow users access uploaded files, directly from path
@@ -152,12 +155,16 @@ def upload_document():
     
     return jsonify({'error': 'File type not allowed'}), 415
 
+
+
 @api_bp.route('/documents/', methods=['GET'])
 def get_documents():
-    from app import mongo
-    # Get documents from MongoDB
-    documents = list(mongo.db.documents.find({}, {'_id': 0}))
+    # Retrieve documents sorted by upload_timestamp in descending order
+    documents = list(mongo.db.documents.find({}, {'_id': 0}).sort("upload_timestamp", DESCENDING))
     return jsonify(documents), 200
+
+
+
 
 @api_bp.route('/documents/<document_id>/', methods=['GET'])
 def get_document(document_id):

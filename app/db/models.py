@@ -32,6 +32,9 @@ def save_document_data(document_metadata, document_data):
     return document['document_id']
 
 def get_document_by_id(document_id):
+
+
+
     """
     Retrieve a document by its ID
     
@@ -42,6 +45,9 @@ def get_document_by_id(document_id):
         dict: The document data or None if not found
     """
     document = mongo.db.documents.find_one({'document_id': document_id}, {'_id': 0})
+
+
+    
     return document
 
 
