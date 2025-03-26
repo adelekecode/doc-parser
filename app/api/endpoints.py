@@ -47,7 +47,7 @@ def upload_document():
     
     file = request.files['file']
     
-    # If user does not select file, browser also
+    # If user does not select file, browser alsod
     # submit an empty part without filename
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
